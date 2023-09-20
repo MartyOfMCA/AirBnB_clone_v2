@@ -11,8 +11,9 @@ from sqlalchemy.orm import relationship
 class State(BaseModel, Base):
     """ State class for storing state entries """
 
-    if (environ.get("HBNB_TYPE_STORAGE", "na") == "db"):
-        __tablename__ = "states"
+    __tablename__ = "states"
+
+    if (environ.get("HBNB_TYPE_STORAGE", "file") == "db"):
         name = Column(String(128), nullable=False)
         cities = relationship("City", cascade="delete",
                               backref="state")

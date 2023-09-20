@@ -63,8 +63,8 @@ class DBStorage:
         my_dict = {}
         objects = []
 
-        if (cls and cls in models):
-            models = {"model": models.get(cls)}
+        if (cls and cls.__name__ in models):
+            models = {"model": models.get(cls.__name__)}
 
         for key, value in models.items():
             objs =  self.__session.query(value)

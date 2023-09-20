@@ -5,16 +5,27 @@ from models.base_model import Base
 from os import environ
 
 from sqlalchemy import Column, String, ForeignKey,\
-                       Integer, Float
+                       Integer, Float, Table
 from sqlalchemy.orm import relationship
+
+place_amenity = Table("place_amenity",
+                      Base.metadata,
+                      Column("place_id",
+                             ForeignKey("places.id"),
+                             primary_key=True,
+                             nullable=False),
+                      Column("amenity_id",
+                             ForeignKey("amenities.id"),
+                             primary_key=True,
+                             nullable=False))
 
 
 class Place(BaseModel, Base):
     """ Stores a record for a place to stay """
-    
-    if (environ.get("HBNB_TYPE_STORAGE", "na") != "na"):
-        __tablename__ = "places"
 
+    __tablename__ = "places"
+    
+    if (environ.get("HBNB_TYPE_STORAGE", "file") == "db"):
         city_id = Column(ForeignKey("cities.id"),
                          nullable=False)
         user_id = Column(ForeignKey("users.id"),
@@ -32,6 +43,10 @@ class Place(BaseModel, Base):
         latitude = Column(Float)
         longitude = Column(Float)
         reviews = relationship("Review", backref="place")
+        amenities = relationship("Amenity",
+                            secondary=place_amenity,
+                            viewonly=False,
+                            backref="place_amenities")
     else:
         city_id = ""
         user_id = ""
@@ -61,3 +76,36 @@ class Place(BaseModel, Base):
                 list_of_reviews.append(value)
 
         return (list_of_reviews)
+
+    @property
+    def amenities(self):
+        """
+        Returns a list of amenities for the current
+        place instance
+        """
+        list_of_amenities = []
+        objs = {}
+
+        objs = storage.all("Amenity")
+
+        for value in objs.values():
+            for obj in self.place_amenity:
+                if (value.id == obj.amenity_id):
+                    objs.append(value)
+
+        return (list_of_amenities)
+
+    @amenities.setter
+    def amenities(self, obj):
+        """
+        Appends amenity id to the list of amenity ids
+
+        Parameters
+            obj : class
+            An amenity object. Any other object given
+            would cause the function to do nothin
+        """
+        if (obj.__class__.__name__ != "Amenity"):
+            return
+
+        

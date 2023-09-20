@@ -10,9 +10,9 @@ from sqlalchemy import Column, String, ForeignKey
 class Review(BaseModel, Base):
     """ A class to store reviews """
 
-    if (environ.get("HBNB_TYPE_STORAGE", "na") != "na"):
-        __tablename__ = "reviews"
+    __tablename__ = "reviews"
 
+    if (environ.get("HBNB_TYPE_STORAGE", "file") == "db"):
         text = Column(String(1024), nullable=False)
         place_id = Column(ForeignKey("places.id"),
                           nullable=False)
