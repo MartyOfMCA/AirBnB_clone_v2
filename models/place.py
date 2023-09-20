@@ -6,6 +6,7 @@ from os import environ
 
 from sqlalchemy import Column, String, ForeignKey,\
                        Integer, Float
+from sqlalchemy.orm import relationship
 
 
 class Place(BaseModel, Base):
@@ -30,6 +31,7 @@ class Place(BaseModel, Base):
                                 default=0)
         latitude = Column(Float)
         longitude = Column(Float)
+        reviews = relationship("Review", backref="place")
     else:
         city_id = ""
         user_id = ""
@@ -42,3 +44,20 @@ class Place(BaseModel, Base):
         latitude = 0.0
         longitude = 0.0
         amenity_ids = []
+
+    @property
+    def reviews(self):
+        """
+        Returns a list of reviews for the current
+        place instance
+        """
+        list_of_reviews = []
+        objs = {}
+
+        objs = storage.all("Review")
+
+        for value in objs.values():
+            if (value.place_id == self.id):
+                list_of_reviews.append(value)
+
+        return (list_of_reviews)
