@@ -8,7 +8,7 @@ from sqlalchemy import Column, String
 
 
 class User(BaseModel, Base):
-    """This class stores users"""
+    """A class for storing user entries"""
     if (environ.get("HBNB_TYPE_STORAGE", "na") != "na"):
         __tablename__ = "users"
 
