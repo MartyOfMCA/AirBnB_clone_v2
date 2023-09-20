@@ -9,7 +9,7 @@ from sqlalchemy.orm import relationship
 
 
 class State(BaseModel, Base):
-    """ State class """
+    """ State class for storing states """
 
     if (environ.get("HBNB_TYPE_STORAGE", "na") == "db"):
         __tablename__ = "states"
@@ -26,10 +26,9 @@ class State(BaseModel, Base):
 
         my_cities = []
         my_dict = storage.all(City)
-        
+
         for key, value in my_dict.items():
             if (value.state.id == self.id):
                 my_cities.append(value)
 
         return (my_cities)
-
