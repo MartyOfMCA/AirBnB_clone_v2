@@ -5,6 +5,7 @@ from models.base_model import Base
 from os import environ
 
 from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy.orm import relationship
 
 
 class City(BaseModel, Base):
@@ -16,6 +17,8 @@ class City(BaseModel, Base):
         name = Column(String(128), nullable=False)
         state_id = Column(ForeignKey("states.id"),
                           nullable=False)
+        places = relationship("Place", cascade="delete",
+                              backref="cities")
     else:
         name = ""
         state_id = ""
