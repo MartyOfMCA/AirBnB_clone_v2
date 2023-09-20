@@ -27,3 +27,36 @@ class test_review(test_basemodel):
         """ """
         new = self.value()
         self.assertEqual(type(new.text), str)
+
+    def test_text_value_no_underscores(self):
+        """
+        Test the text for a review instance
+        not containing underscores
+        """
+        new = self.value()
+        new.text = "\"Good\""
+        new.text = __import__("console")\
+            .HBNBCommand\
+            .find_type(new.text)[0]
+        self.assertEqual("Good", new.text)
+
+    def test_text_value_with_underscores(self):
+        """
+        Test the text for a state instance
+        containing underscores
+        """
+        new = self.value()
+        new.text = "\"Such_a_great_place.\""
+        new.text = __import__("console")\
+            .HBNBCommand\
+            .find_type(new.text)[0]
+        self.assertEqual("Such a great place.", new.text)
+
+    def test_text_type(self):
+        """ Test the type for text attribute """
+        new = self.value()
+        new.text = "\"Caliornia\""
+        new.text = __import__("console")\
+            .HBNBCommand\
+            .find_type(new.text)[0]
+        self.assertTrue(type(new.text) is str)
