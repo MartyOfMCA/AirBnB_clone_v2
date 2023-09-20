@@ -20,16 +20,16 @@ class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) ' if sys.__stdin__.isatty() else ''
 
     classes = {
-               'BaseModel': BaseModel, 'User': User, 'Place': Place,
-               'State': State, 'City': City, 'Amenity': Amenity,
-               'Review': Review
-              }
+        'BaseModel': BaseModel, 'User': User, 'Place': Place,
+        'State': State, 'City': City, 'Amenity': Amenity,
+        'Review': Review
+    }
     dot_cmds = ['all', 'count', 'show', 'destroy', 'update']
     types = {
-             'number_rooms': int, 'number_bathrooms': int,
-             'max_guest': int, 'price_by_night': int,
-             'latitude': float, 'longitude': float
-            }
+        'number_rooms': int, 'number_bathrooms': int,
+        'max_guest': int, 'price_by_night': int,
+        'latitude': float, 'longitude': float
+    }
 
     def preloop(self):
         """Prints if isatty is false"""
@@ -177,14 +177,12 @@ class HBNBCommand(cmd.Cmd):
         try:
             # Check for a valid value
             value = value[1:-1].replace("\"", "\"").\
-                    replace("_", " ").strip()\
-                    if ptype == "string"\
-                    else value
+                replace("_", " ").strip()\
+                if ptype == "string"\
+                else value
             value = cast_functions.get(ptype)(value)
         except ValueError:
             value, ptype = None, None
-            print("Invalid value. Safely skip.\
-                    Don't forget to delete this instruction")
 
         return ((value, ptype,))
 
@@ -249,7 +247,7 @@ class HBNBCommand(cmd.Cmd):
         key = c_name + "." + c_id
 
         try:
-            del(storage.all()[key])
+            del (storage.all()[key])
             storage.save()
         except KeyError:
             print("** no instance found **")
