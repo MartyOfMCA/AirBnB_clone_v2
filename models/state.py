@@ -9,7 +9,7 @@ from sqlalchemy.orm import relationship
 
 
 class State(BaseModel, Base):
-    """ State class for storing states """
+    """ State class for storing state entries """
 
     if (environ.get("HBNB_TYPE_STORAGE", "na") == "db"):
         __tablename__ = "states"
