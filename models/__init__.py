@@ -7,7 +7,7 @@ from os import environ
 storage = None
 storage_type = environ.get("HBNB_TYPE_STORAGE")
 
-if(storage_type == "db"):
+if (storage_type == "db"):
     storage = DBStorage()
 else:
     storage = FileStorage()
