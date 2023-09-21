@@ -24,7 +24,7 @@ class Place(BaseModel, Base):
     """ Stores a record for a place to stay """
 
     __tablename__ = "places"
-    
+
     if (environ.get("HBNB_TYPE_STORAGE", "file") == "db"):
         city_id = Column(ForeignKey("cities.id"),
                          nullable=False)
@@ -44,9 +44,9 @@ class Place(BaseModel, Base):
         longitude = Column(Float)
         reviews = relationship("Review", backref="place")
         amenities = relationship("Amenity",
-                            secondary=place_amenity,
-                            viewonly=False,
-                            backref="place_amenities")
+                                 secondary=place_amenity,
+                                 viewonly=False,
+                                 backref="place_amenities")
     else:
         city_id = ""
         user_id = ""

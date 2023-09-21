@@ -38,7 +38,7 @@ class DBStorage:
         if (should_delete == "tests"):
             Base.metadata.drop_all(__engine)
             return
-        
+
     def all(self, cls=None):
         """
         Retrieves objects from the database.
@@ -67,7 +67,7 @@ class DBStorage:
             models = {"model": models.get(cls.__name__)}
 
         for key, value in models.items():
-            objs =  self.__session.query(value)
+            objs = self.__session.query(value)
             for obj in objs:
                 objects.append(obj)
 
