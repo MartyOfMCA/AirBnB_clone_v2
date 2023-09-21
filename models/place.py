@@ -76,36 +76,3 @@ class Place(BaseModel, Base):
                 list_of_reviews.append(value)
 
         return (list_of_reviews)
-
-    @property
-    def amenities(self):
-        """
-        Returns a list of amenities for the current
-        place instance
-        """
-        list_of_amenities = []
-        objs = {}
-
-        objs = storage.all("Amenity")
-
-        for value in objs.values():
-            for obj in self.place_amenity:
-                if (value.id == obj.amenity_id):
-                    objs.append(value)
-
-        return (list_of_amenities)
-
-    @amenities.setter
-    def amenities(self, obj):
-        """
-        Appends amenity id to the list of amenity ids
-
-        Parameters
-            obj : class
-            An amenity object. Any other object given
-            would cause the function to do nothin
-        """
-        if (obj.__class__.__name__ != "Amenity"):
-            return
-
-        
