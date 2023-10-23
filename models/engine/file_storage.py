@@ -73,3 +73,7 @@ class FileStorage:
 
         if (self.__objects.get(key, "na") != "na"):
             del self.__objects[key]
+
+    def close(self):
+        """ Close """
+        self.reload()
